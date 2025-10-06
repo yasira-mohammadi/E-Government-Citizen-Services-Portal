@@ -1,0 +1,44 @@
+<% layout('layouts/main') -%>
+<h1 class="text-3xl font-bold text-emerald-800 mb-6">My Requests</h1>
+
+<div class="card p-4">
+  <% if (requests && requests.length > 0) { %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Request ID</th>
+          <th>Service</th>
+          <th>Department</th>
+          <th>Status</th>
+          <th>Submitted At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% requests.forEach(request => { %>
+          <tr>
+            <td><%= request.id %></td>
+            <td><%= request.service_name %></td>
+            <td><%= request.department_name %></td>
+            <td><%= request.status %></td>
+            <td><%= new Date(request.submitted_at).toLocaleString() %></td>
+            <td>
+              <% if (request.status === 'submitted') { %>
+                <form action="/citizen/requests/<%= request.id %>/documents" method="POST" enctype="multipart/form-data" class="d-inline">
+                  <input type="file" name="document" accept=".pdf,.jpg,.jpeg,.png" required>
+                  <button type="submit" class="btn btn-sm btn-primary mt-2">Upload Document</button>
+                </form>
+                <form action="/citizen/requests/<%= request.id %>/pay" method="POST" class="d-inline">
+                  <input type="hidden" name="amount" value="50.00">
+                  <button type="submit" class="btn btn-sm btn-primary mt-2">Pay</button>
+                </form>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No requests found.</p>
+  <% } %>
+</div>

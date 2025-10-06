@@ -1,0 +1,39 @@
+<% layout('layouts/main') -%>
+<h1 class="text-3xl font-bold text-emerald-800 mb-6">Citizen Dashboard</h1>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card p-4 mb-4">
+      <h2 class="text-xl text-emerald-800 mb-3">Recent Requests</h2>
+      <% if (requests && requests.length > 0) { %>
+        <ul class="list-group">
+          <% requests.slice(0, 5).forEach(request => { %>
+            <li class="list-group-item">
+              <strong><%= request.service_name %></strong> - <%= request.status %>
+              <a href="/citizen/requests" class="text-emerald-800 float-end">View Details</a>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>No requests found.</p>
+      <% } %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card p-4 mb-4">
+      <h2 class="text-xl text-emerald-800 mb-3">Notifications</h2>
+      <% if (notifications && notifications.length > 0) { %>
+        <ul class="list-group">
+          <% notifications.slice(0, 5).forEach(notification => { %>
+            <li class="list-group-item <%= notification.is_read ? '' : 'bg-emerald-50' %>">
+              <%= notification.message %>
+              <span class="text-gray-500 text-sm float-end"><%= new Date(notification.created_at).toLocaleString() %></span>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>No notifications found.</p>
+      <% } %>
+    </div>
+  </div>
+</div>

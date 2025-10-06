@@ -1,0 +1,39 @@
+<% layout('layouts/main') -%>
+<h1 class="text-3xl font-bold text-emerald-800 mb-6">Request Details</h1>
+
+<div class="card p-4">
+  <h2 class="text-xl text-emerald-800 mb-3">Request #<%= request.id %></h2>
+  <p><strong>Service:</strong> <%= request.service_name %></p>
+  <p><strong>Department:</strong> <%= request.department_name %></p>
+  <p><strong>Status:</strong> <%= request.status %></p>
+  <p><strong>Submitted At:</strong> <%= new Date(request.submitted_at).toLocaleString() %></p>
+  <p><strong>Comments:</strong> <%= request.comments || 'None' %></p>
+
+  <h3 class="text-lg text-emerald-800 mt-4 mb-2">Documents</h3>
+  <% if (documents && documents.length > 0) { %>
+    <ul class="list-group mb-4">
+      <% documents.forEach(document => { %>
+        <li class="list-group-item"><%= document.file_name %></li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p>No documents uploaded.</p>
+  <% } %>
+
+  <h3 class="text-lg text-emerald-800 mb-2">Update Status</h3>
+  <form action="/officer/requests/<%= request.id %>" method="POST">
+    <div class="mb-3">
+      <label for="status" class="form-label">Status</label>
+      <select class="form-control" id="status" name="status" required>
+        <option value="under_review" <%= request.status === 'under_review' ? 'selected' : '' %>>Under Review</option>
+        <option value="approved" <%= request.status === 'approved' ? 'selected' : '' %>>Approved</option>
+        <option value="rejected" <%= request.status === 'rejected' ? 'selected' : '' %>>Rejected</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="comments" class="form-label">Comments</label>
+      <textarea class="form-control" id="comments" name="comments" rows="4"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+</div>

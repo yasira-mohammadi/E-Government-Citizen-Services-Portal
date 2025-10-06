@@ -1,0 +1,74 @@
+<% layout('layouts/main') -%>
+<h1 class="text-3xl font-bold text-emerald-800 mb-6">Admin Dashboard</h1>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card p-4 mb-4">
+      <h2 class="text-xl text-emerald-800 mb-3">Reports</h2>
+      <% if (reports && reports.length > 0) { %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Department</th>
+              <th>Total Requests</th>
+              <th>Approved</th>
+              <th>Rejected</th>
+              <th>Total Fees</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% reports.forEach(report => { %>
+              <tr>
+                <td><%= report.department_name %></td>
+                <td><%= report.total_requests %></td>
+                <td><%= report.approved_requests %></td>
+                <td><%= report.rejected_requests %></td>
+                <td><%= report.total_fees || 0 %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p>No reports available.</p>
+      <% } %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card p-4 mb-4">
+      <h2 class="text-xl text-emerald-800 mb-3">Add Department</h2>
+      <form action="/admin/departments" method="POST">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Department</button>
+      </form>
+    </div>
+    <div class="card p-4">
+      <h2 class="text-xl text-emerald-800 mb-3">Add Service</h2>
+      <form action="/admin/services" method="POST">
+        <div class="mb-3">
+          <label for="department_id" class="form-label">Department ID</label>
+          <input type="number" class="form-control" id="department_id" name="department_id" required>
+        </div>
+        <div class="mb-3">
+          <label for="name" class="form-label">Service Name</label>
+          <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="fee" class="form-label">Fee</label>
+          <input type="number" step="0.01" class="form-control" id="fee" name="fee" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Service</button>
+      </form>
+    </div>
+  </div>
+</div>

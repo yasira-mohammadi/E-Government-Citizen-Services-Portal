@@ -1,0 +1,44 @@
+body {
+  background-color: #c9eaff;
+  color: #1a202c;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #065f46; /* Dark green */
+}
+
+.navbar-brand, .nav-link {
+  color: #ffa7a7 !important;
+}
+
+.nav-link:hover {
+  color: #5ef3a6 !important; /* Lighter green on hover */
+}
+/* Buttons */
+.btn-primary {
+  background-color: #065f46;
+  border-color: #065f46;
+}
+
+.btn-primary:hover {
+  background-color: #047857;
+  border-color: #047857;
+}
+
+/* Cards */
+.card {
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Alerts */
+.alert-success {
+  background-color: #74fab5;
+  color: #065f46;
+}
+
+.alert-danger {
+  background-color: #f58d8d;
+  color: #b91c1c;
+}

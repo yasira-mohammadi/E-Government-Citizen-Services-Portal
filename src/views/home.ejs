@@ -1,0 +1,23 @@
+
+<% layout('layouts/main') -%>
+<div class="text-center">
+  <h1 class="text-4xl font-bold text-emerald-800 mb-4">
+    Welcome to E-Government Portal
+  </h1>
+  <% if (user) { %>
+    <p class="text-xl">Hello, <%= user.name %>!</p>
+    <p class="mt-2">
+      Access your 
+      <a href="/<%= user.role %>/dashboard" class="text-emerald-800 underline">dashboard</a>
+      to get started.
+    </p>
+  <% } else { %>
+    <p class="text-xl">
+      Please 
+      <a href="/auth/login" class="text-emerald-800 underline">login</a> 
+      or 
+      <a href="/auth/register" class="text-emerald-800 underline">register</a> 
+      to access services.
+    </p>
+  <% } %>
+</div>

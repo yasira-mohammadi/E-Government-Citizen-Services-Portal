@@ -1,0 +1,74 @@
+<% layout('layouts/main') -%>
+<h1 class="text-3xl font-bold text-emerald-800 mb-6">Department Head Dashboard</h1>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card p-4 mb-4">
+      <h2 class="text-xl text-emerald-800 mb-3">Department Requests</h2>
+      <% if (requests && requests.length > 0) { %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Request ID</th>
+              <th>Service</th>
+              <th>Status</th>
+              <th>Assigned Officer</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% requests.forEach(request => { %>
+              <tr>
+                <td><%= request.id %></td>
+                <td><%= request.service_name %></td>
+                <td><%= request.status %></td>
+                <td><%= request.officer_id ? `Officer ID: ${request.officer_id}` : 'Unassigned' %></td>
+                <td>
+                  <a href="/officer/requests/<%= request.id %>" class="btn btn-sm btn-primary">View</a>
+                  <form action="/officer/requests/<%= request.id %>/assign" method="POST" class="d-inline">
+                    <select name="officer_id" class="form-control d-inline w-auto" required>
+                      <option value="">Select Officer</option>
+                      <% officers.forEach(officer => { %>
+                        <option value="<%= officer.id %>"><%= officer.name %></option>
+                      <% }) %>
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-primary mt-2">Assign</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p>No requests found.</p>
+      <% } %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card p-4 mb-4">
+      <h2 class="text-xl text-emerald-800 mb-3">Officers in Department</h2>
+      <% if (officers && officers.length > 0) { %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Job Title</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% officers.forEach(officer => { %>
+              <tr>
+                <td><%= officer.name %></td>
+                <td><%= officer.email %></td>
+                <td><%= officer.job_title || 'N/A' %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p>No officers found in this department.</p>
+      <% } %>
+    </div>
+  </div>
+</div>
